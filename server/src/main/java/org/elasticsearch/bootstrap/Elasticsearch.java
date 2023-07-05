@@ -55,6 +55,7 @@ import static org.elasticsearch.bootstrap.BootstrapSettings.SECURITY_FILTER_BAD_
 
 /**
  * This class starts elasticsearch.
+ * 集群整体启动*
  */
 class Elasticsearch {
 
@@ -62,12 +63,14 @@ class Elasticsearch {
      * Main entry point for starting elasticsearch.
      */
     public static void main(final String[] args) {
-
+        //获取 Bootstrap
         Bootstrap bootstrap = initPhase1();
         assert bootstrap != null;
 
         try {
+            //阶段2
             initPhase2(bootstrap);
+            //阶段 3
             initPhase3(bootstrap);
         } catch (NodeValidationException e) {
             bootstrap.exitWithNodeValidationException(e);
@@ -137,6 +140,7 @@ class Elasticsearch {
             return null; // unreachable, to satisfy compiler
         }
 
+        // 返回 new Bootstrap
         return new Bootstrap(out, err, args);
     }
 
@@ -243,6 +247,7 @@ class Elasticsearch {
         // any secure settings must be read during node construction
         IOUtils.close(bootstrap.secureSettings());
 
+        //Elasticsearch 实例启动
         INSTANCE.start();
 
         if (bootstrap.args().daemonize()) {
@@ -450,7 +455,9 @@ class Elasticsearch {
     }
 
     private void start() throws NodeValidationException {
+        // node 启动
         node.start();
+        //keepAliveThread 启动
         keepAliveThread.start();
     }
 

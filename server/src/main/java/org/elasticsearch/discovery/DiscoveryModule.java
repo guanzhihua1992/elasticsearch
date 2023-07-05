@@ -60,6 +60,7 @@ import static org.elasticsearch.node.Node.NODE_NAME_SETTING;
 
 /**
  * A module for loading classes for node discovery.
+ * 负责节点发现*
  */
 public class DiscoveryModule {
     private static final Logger logger = LogManager.getLogger(DiscoveryModule.class);

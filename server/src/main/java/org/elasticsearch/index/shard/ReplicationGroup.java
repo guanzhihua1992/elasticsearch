@@ -18,6 +18,9 @@ import java.util.Set;
 
 /**
  * Replication group for a shard. Used by a primary shard to coordinate replication and recoveries.
+ * 一个互为副本的数据集合称为副本组。其中
+ * 只有一个副本是主数据(Primary)，其他为从数据(Secondary)
+ * 主数据 管理数据副本和数据恢复
  */
 public class ReplicationGroup {
     private final IndexShardRoutingTable routingTable;

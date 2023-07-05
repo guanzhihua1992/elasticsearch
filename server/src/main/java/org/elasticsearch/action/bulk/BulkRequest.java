@@ -48,6 +48,9 @@ import static org.elasticsearch.action.ValidateActions.addValidationError;
  *
  * Note that we only support refresh on the bulk request not per item.
  * @see org.elasticsearch.client.internal.Client#bulk(BulkRequest)
+ * 写入单个文档的请求称
+ * 为Index请求，批量写入的请求称为Bulk请求。写单个和多个文档使用
+ * 相同的处理逻辑，请求被统一封装为BulkRequest
  */
 public class BulkRequest extends ActionRequest
     implements

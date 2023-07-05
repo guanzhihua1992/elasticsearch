@@ -173,16 +173,25 @@ public interface DocWriteRequest<T> extends IndicesRequest, Accountable {
         /**
          * Index the source. If there an existing document with the id, it will
          * be replaced.
+         * *
+         * INDEX:向索引中“put”一个文档的操作称为“索引”一个文
+         * 档。此处“索引”为动词。如果文档有id 则为更新*
          */
         INDEX(0),
         /**
          * Creates the resource. Simply adds it to the index, if there is an existing
          * document with the id, then it won't be removed.
+         *
+         * put 请求可以通过 op_type 参数设置操作类型为
+         * create，在这种操作下，如果文档已存在，则请求将失败。* *
          */
         CREATE(1),
-        /** Updates a document */
+        /** Updates a document
+         * 默认情况下，“put”一个文档时，如果文档已存
+         * 在，则更新它。
+         * */
         UPDATE(2),
-        /** Deletes a document */
+        /** Deletes a document 删除文档*/
         DELETE(3);
 
         private final byte op;

@@ -519,17 +519,19 @@ public class Coordinator extends AbstractLifecycleComponent implements ClusterSt
         assert Thread.holdsLock(mutex);
         return Math.max(getCurrentTerm(), maxTermSeen) + 1;
     }
-
+    //开始选举 选取主节点
     private void startElection() {
         synchronized (mutex) {
             // The preVoteCollector is only active while we are candidate, but it does not call this method with synchronisation, so we have
             // to check our mode again here.
+            //判断当前节点为 CANDIDATE
             if (mode == Mode.CANDIDATE) {
+                //判断本地节点不能赢得选举
                 if (localNodeMayWinElection(getLastAcceptedState()) == false) {
                     logger.trace("skip election as local node may not win it: {}", getLastAcceptedState().coordinationMetadata());
                     return;
                 }
-
+                //新 electionTerm
                 final var electionTerm = getTermForNewElection();
                 logger.debug("starting election for {} in term {}", getLocalNode(), electionTerm);
                 broadcastStartJoinRequest(getLocalNode(), electionTerm, getDiscoveredNodes());
@@ -1616,7 +1618,7 @@ public class Coordinator extends AbstractLifecycleComponent implements ClusterSt
     public void addPeerFinderListener(PeerFinderListener peerFinderListener) {
         this.peerFinderListeners.add(peerFinderListener);
     }
-
+    //节点模式 有三种 CANDIDATE 候选者 LEADER 主节点 FOLLOWER 从节点
     public enum Mode {
         CANDIDATE,
         LEADER,
